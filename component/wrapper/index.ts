@@ -32,7 +32,7 @@ interface SakanaWidgetOptions {
   /**
    * default character, default to `chisato`
    */
-  character?: 'qiuqiu' | 'taotao' | 'qiuqiu2' | 'qiuqiu3' | 'chisato' | 'takina' | string;
+  character?: 'qiuqiu' | 'taotao' | 'qiuqiu2' | 'qiuqiu3' | string;
   /**
    * controls bar, default to `true`
    */
