@@ -1,17 +1,15 @@
 <p align="center">
 <img src="https://www.img520.com/s941MX.png" height="160px">
-<img src="https://raw.githubusercontent.com/dsrkafuu/sakana-widget/main/src/characters/takina.png" height="160px">
+<img src="https://www.img520.com/5Ept37.png" height="160px">
 </p>
 
 # Obsidian -- 🐱「Qiuqiu Widget」
 
-**Note:** A cute Qiuqiu widget for your Obsidian! Play with it while writing notes.
+A cute Qiuqiu widget for your Obsidian! Play with it while writing notes.
 
-![](https://raw.githubusercontent.com/Quorafind/obsidian-sakana-widget/master/media/sakanaGif.gif)
-
-- Default character: Qiuqiu (custom image)
-- Support for chisato and takina characters
-- Drag to move, click controller to switch characters or toggle auto mode
+- 6 characters: qiuqiu, taotao, qiuqiu2, qiuqiu3, chisato, takina
+- Drag to swing, click controller to switch characters or toggle auto mode
+- Custom widget support via settings
 
 # How to Install
 
@@ -21,10 +19,8 @@ Add `ayoyoqiu/obsidian-sakana-qiuqiu` to BRAT.
 
 ## Download Manually
 
-Download the latest release. Extract and put the three files (main.js, manifest.json, styles.css) to folder `{{obsidian_vault}}/.obsidian/plugins/obsidian-sakana-qiuqiu`.
+Download the latest release. Extract and put the three files (main.js, manifest.json, styles.css) to `{{vault}}/.obsidian/plugins/qiuqiu`.
 
 # License
 
-Released under MIT License. Based on [obsidian-sakana-widget](https://github.com/quorafind/obsidian-sakana-widget) by Boninall / [sakana-widget](https://github.com/dsrkafuu/sakana-widget).
-
-Image source: 大伏アオ [@blue00f4](https://twitter.com/blue00f4) [pixiv](https://pixiv.me/aoiroblue1340)
+MIT
