@@ -1,10 +1,10 @@
 {
-	"id": "obsidian-sakana-widget",
-	"name": "Sakana Widget",
-	"version": "2.1.0",
+	"id": "qiuqiu",
+	"name": "Qiuqiu",
+	"version": "2.1.1",
 	"minAppVersion": "0.15.0",
-	"description": "Add the Sakana! Widget to your own Obsidian!",
-	"author": "Boninall",
-	"authorUrl": "https://obsidian.md",
+	"description": "A cute Qiuqiu widget for your Obsidian! Based on Sakana Widget.",
+	"author": "ayoyoqiu",
+	"authorUrl": "https://github.com/ayoyoqiu",
 	"isDesktopOnly": false
 }

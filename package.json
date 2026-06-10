@@ -1,6 +1,6 @@
 {
-	"name": "obsidian-sakana-widget",
-	"version": "2.1.0",
+	"name": "qiuqiu",
+	"version": "2.1.1",
 	"description": "Add the Sakana! Widget to your own Obsidian!",
 	"main": "main.js",
 	"scripts": {

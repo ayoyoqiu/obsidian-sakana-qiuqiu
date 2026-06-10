@@ -30,7 +30,7 @@ interface SakanaWidgetOptions {
   /**
    * default character, default to `chisato`
    */
-  character?: 'chisato' | 'takina' | string;
+  character?: 'qiuqiu' | 'taotao' | 'qiuqiu2' | 'qiuqiu3' | 'chisato' | 'takina' | string;
   /**
    * controls bar, default to `true`
    */
@@ -54,7 +54,7 @@ interface SakanaWidgetOptions {
 const defaultOptions: SakanaWidgetOptions = {
   size: 200,
   autoFit: false,
-  character: 'chisato',
+  character: 'qiuqiu',
   controls: true,
   stroke: {
     color: '#b4b4b4',
@@ -259,7 +259,7 @@ class SakanaWidget {
     ctrl.appendChild(magic);
     const github = document.createElement('a');
     github.className = itemClass;
-    github.href = 'https://github.com/quorafind/obsidian-sakana-widget';
+    github.href = 'https://github.com/ayoyoqiu/obsidian-sakana-qiuqiu';
     github.target = '_blank';
     github.innerHTML = svgGitHub;
     ctrl.appendChild(github);
@@ -599,12 +599,12 @@ class SakanaWidget {
     this._domImage.addEventListener('touchstart', this._onTouchStart);
     this._domCtrlPerson.addEventListener('click', ()=>{
 		this.nextCharacter();
-		app.plugins.plugins['obsidian-sakana-widget'].saveCurrentWidgetName();
+		app.plugins.plugins['qiuqiu'].saveCurrentWidgetName();
 	});
     this._domCtrlMagic.addEventListener('click', this.triggetAutoMode);
     this._domCtrlClose.addEventListener('click', ()=>{
 		this.unmount();
-		app.plugins.plugins['obsidian-sakana-widget'].detachSakanaWidget();
+		app.plugins.plugins['qiuqiu'].detachSakanaWidget();
 	});
 
     // if auto fit mode

@@ -1,33 +1,30 @@
 <p align="center">
-<img src="https://raw.githubusercontent.com/dsrkafuu/sakana-widget/main/src/characters/chisato.png" height="160px">
+<img src="https://www.img520.com/s941MX.png" height="160px">
 <img src="https://raw.githubusercontent.com/dsrkafuu/sakana-widget/main/src/characters/takina.png" height="160px">
 </p>
 
-# Obsidian -- 🐟「Sakana! Widget」
+# Obsidian -- 🐱「Qiuqiu Widget」
 
-**Note:** Add the Sakana! Widget to your own Obsidian! You can play with it when you are writing notes.
+**Note:** A cute Qiuqiu widget for your Obsidian! Play with it while writing notes.
 
 ![](https://raw.githubusercontent.com/Quorafind/obsidian-sakana-widget/master/media/sakanaGif.gif)
 
-- Settings
-  - Now you can add your own widget to the Sakana! Widget.
+- Default character: Qiuqiu (custom image)
+- Support for chisato and takina characters
+- Drag to move, click controller to switch characters or toggle auto mode
 
 # How to Install
 
-## From Plugin Market in Obsidian [Not Yet]
-
-💜: Directly install from Obsidian Market.
-
 ## From BRAT
 
-🚗: Add `Quorafind/obsidian-sakana-sakanaWidget` to BRAT.
+Add `ayoyoqiu/obsidian-sakana-qiuqiu` to BRAT.
 
 ## Download Manually
 
-🚚: Download the latest release. Extract and put the three files (main.js, manifest.json, styles.css) to folder `{{obsidian_vault}}/.obsidian/plugins/Obsidian-Sakana-Widget`.
+Download the latest release. Extract and put the three files (main.js, manifest.json, styles.css) to folder `{{obsidian_vault}}/.obsidian/plugins/obsidian-sakana-qiuqiu`.
 
 # License
 
-Released under MIT License, please note that the 2 default images **should not be used for any commercial activities**. This project used to be a secondary development based on https://github.com/itorr/sakana | https://github.com/dsrkafuu/sakana-sakanaWidget.
+Released under MIT License. Based on [obsidian-sakana-widget](https://github.com/quorafind/obsidian-sakana-widget) by Boninall / [sakana-widget](https://github.com/dsrkafuu/sakana-widget).
 
 Image source: 大伏アオ [@blue00f4](https://twitter.com/blue00f4) [pixiv](https://pixiv.me/aoiroblue1340)
