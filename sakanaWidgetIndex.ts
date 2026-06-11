@@ -1,6 +1,8 @@
 import SakanaWidget from 'component/wrapper';
 import { App, Plugin, PluginSettingTab, Setting } from 'obsidian';
 
+declare const activeDocument: Document;
+
 interface SakanaWidgetPluginSettings {
 	widgets: SakanaWidgetInterface[];
 	lastWidget: string;
@@ -50,17 +52,18 @@ export default class SakanaWidgetPlugin extends Plugin {
 
 	private addSakanaWidget() {
 
-		this.sakanaBoxEl = document.body.createEl('div', { attr: { id: 'sakana-widget-box' }, cls: 'sakana-widget-box' });
+		this.sakanaBoxEl = activeDocument.body.createEl('div', { attr: { id: 'sakana-widget-box' }, cls: 'sakana-widget-box' });
 		this.sakanaEl = this.sakanaBoxEl.createEl('div', { attr: { id: 'sakana-widget' }, cls: 'sakana-widget' });
 
 		this.sakanaWidget = new SakanaWidget({ character: this.settings.lastWidget ? this.settings.lastWidget : 'qiuqiu' , autoFit: true }).setState({ i: 0.03, d: 0.99,  }).mount('#sakana-widget');
 
 	}
 
-	async onunload() {
+	onunload(): void {
 		if(this.sakanaWidget) {
-			await this.saveCurrentWidgetName();
-			this.sakanaWidget.unmount();
+			void this.saveCurrentWidgetName().then(() => {
+				this.sakanaWidget?.unmount();
+			});
 		}
 		if(this.sakanaBoxEl) {
 			this.sakanaBoxEl.detach();
@@ -130,7 +133,7 @@ export default class SakanaWidgetPlugin extends Plugin {
 	}
 
 	async loadSettings() {
-		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData()) as SakanaWidgetPluginSettings;
 	}
 
 	async saveSettings() {
@@ -163,7 +166,7 @@ class SakanaWidgetSettingTab extends PluginSettingTab {
 
 		containerEl.empty();
 
-		new Setting(containerEl).setName('Qiuqiu Widget Settings').setHeading();
+		new Setting(containerEl).setName('General').setHeading();
 
 		new Setting(containerEl)
 			.setName('Add new widget')

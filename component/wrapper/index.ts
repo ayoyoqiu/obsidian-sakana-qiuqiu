@@ -10,6 +10,7 @@ import { cloneDeep, mergeDeep, throttle, getCanvasCtx } from './utils';
 import type { App } from 'obsidian';
 
 declare const app: App;
+declare const activeDocument: Document;
 
 function parseSvg(svgStr: string): Element {
 	const parser = new DOMParser();
@@ -226,59 +227,59 @@ class SakanaWidget {
    */
   private _updateDom = () => {
     // wrapper
-    const wrapper = document.createElement('div');
+    const wrapper = activeDocument.createElement('div');
     wrapper.className = 'sakana-widget-wrapper';
     this._domWrapper = wrapper;
 
     // widget root app
-    const app = document.createElement('div');
+    const app = activeDocument.createElement('div');
     app.className = 'sakana-widget-app';
     this._domApp = app;
     wrapper.appendChild(app);
 
     // canvas stroke palette
-    const canvas = document.createElement('canvas');
+    const canvas = activeDocument.createElement('canvas');
     canvas.className = 'sakana-widget-canvas';
     this._domCanvas = canvas;
     app.appendChild(canvas);
 
     // widget main container
-    const main = document.createElement('div');
+    const main = activeDocument.createElement('div');
     main.className = 'sakana-widget-main';
     this._domMain = main;
     app.appendChild(main);
 
     // widget image
-    const img = document.createElement('div');
+    const img = activeDocument.createElement('div');
     img.className = 'sakana-widget-img';
     img.style.backgroundImage = `url('${this._image}')`;
     this._domImage = img;
     main.appendChild(img);
 
     // control bar
-    const ctrl = document.createElement('div');
+    const ctrl = activeDocument.createElement('div');
     ctrl.className = 'sakana-widget-ctrl';
     if (this._options.controls) {
       main.appendChild(ctrl);
     }
     const itemClass = 'sakana-widget-ctrl-item';
-    const person = document.createElement('div');
+    const person = activeDocument.createElement('div');
     person.className = itemClass;
     person.appendChild(parseSvg(svgPerson));
     this._domCtrlPerson = person;
     ctrl.appendChild(person);
-    const magic = document.createElement('div');
+    const magic = activeDocument.createElement('div');
     magic.className = itemClass;
     magic.appendChild(parseSvg(svgSync));
     this._domCtrlMagic = magic;
     ctrl.appendChild(magic);
-    const github = document.createElement('a');
+    const github = activeDocument.createElement('a');
     github.className = itemClass;
     github.href = 'https://github.com/ayoyoqiu/obsidian-sakana-qiuqiu';
     github.target = '_blank';
     github.appendChild(parseSvg(svgGitHub));
     ctrl.appendChild(github);
-    const close = document.createElement('div');
+    const close = activeDocument.createElement('div');
     close.className = itemClass;
     close.appendChild(parseSvg(svgClose));
     this._domCtrlClose = close;
@@ -431,14 +432,14 @@ class SakanaWidget {
     };
 
     const onMouseUp = () => {
-      document.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('mouseup', onMouseUp);
+      activeDocument.removeEventListener('mousemove', onMouseMove);
+      activeDocument.removeEventListener('mouseup', onMouseUp);
       this._running = true;
       window.requestAnimationFrame(this._run);
     };
 
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseup', onMouseUp);
+    activeDocument.addEventListener('mousemove', onMouseMove);
+    activeDocument.addEventListener('mouseup', onMouseUp);
   };
 
   /**
@@ -469,14 +470,14 @@ class SakanaWidget {
     };
 
     const onTouchEnd = () => {
-      document.removeEventListener('touchmove', onTouchMove);
-      document.removeEventListener('touchend', onTouchEnd);
+      activeDocument.removeEventListener('touchmove', onTouchMove);
+      activeDocument.removeEventListener('touchend', onTouchEnd);
       this._running = true;
       window.requestAnimationFrame(this._run);
     };
 
-    document.addEventListener('touchmove', onTouchMove);
-    document.addEventListener('touchend', onTouchEnd);
+    activeDocument.addEventListener('touchmove', onTouchMove);
+    activeDocument.addEventListener('touchend', onTouchEnd);
   };
 
   /**
@@ -596,7 +597,7 @@ class SakanaWidget {
     // pre check
     let _el: HTMLElement | null = null;
     if (typeof el === 'string') {
-      _el = document.querySelector(el);
+      _el = activeDocument.querySelector(el);
     } else {
       _el = el;
     }
@@ -614,12 +615,12 @@ class SakanaWidget {
     this._domImage.addEventListener('touchstart', this._onTouchStart);
     this._domCtrlPerson.addEventListener('click', ()=>{
 		this.nextCharacter();
-		app.plugins.plugins['qiuqiu'].saveCurrentWidgetName?.();
+		void app.plugins.plugins['qiuqiu'].saveCurrentWidgetName?.();
 	});
     this._domCtrlMagic.addEventListener('click', this.triggetAutoMode);
     this._domCtrlClose.addEventListener('click', ()=>{
 		this.unmount();
-		app.plugins.plugins['qiuqiu'].detachSakanaWidget?.();
+		void app.plugins.plugins['qiuqiu'].detachSakanaWidget?.();
 	});
 
     // if auto fit mode
@@ -657,7 +658,7 @@ class SakanaWidget {
     this._domCtrlClose.removeEventListener('click', this.unmount);
 
     // if auto fit mode
-    this._resizeObserver && this._resizeObserver.disconnect();
+    if (this._resizeObserver) { this._resizeObserver.disconnect(); }
 
     // unmount node
     const _el = this._domWrapper.parentNode;

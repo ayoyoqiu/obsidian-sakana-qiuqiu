@@ -17,7 +17,7 @@ export function cloneDeep<T>(value: T): T {
   if (typeof window.structuredClone === 'function') {
     return window.structuredClone(value);
   } else {
-    return JSON.parse(JSON.stringify(value));
+    return JSON.parse(JSON.stringify(value)) as T;
   }
 }
 
