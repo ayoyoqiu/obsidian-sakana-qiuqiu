@@ -11,12 +11,23 @@ import type { App } from 'obsidian';
 
 declare const app: App;
 
+function parseSvg(svgStr: string): Element {
+	const parser = new DOMParser();
+	const doc = parser.parseFromString(svgStr.trim(), 'text/html');
+	const el = doc.body.firstElementChild;
+	if (!el) throw new Error('Failed to parse SVG');
+	return el;
+}
+
 declare module "obsidian" {
 	interface App {
 		plugins: {
 			enabledPlugins: Set<string>;
 			plugins: {
-				[id: string]: any;
+				[id: string]: {
+					saveCurrentWidgetName?: () => Promise<void>;
+					detachSakanaWidget?: () => Promise<void>;
+				};
 			};
 		}
 	}
@@ -253,23 +264,23 @@ class SakanaWidget {
     const itemClass = 'sakana-widget-ctrl-item';
     const person = document.createElement('div');
     person.className = itemClass;
-    person.insertAdjacentHTML('beforeend', svgPerson);
+    person.appendChild(parseSvg(svgPerson));
     this._domCtrlPerson = person;
     ctrl.appendChild(person);
     const magic = document.createElement('div');
     magic.className = itemClass;
-    magic.insertAdjacentHTML('beforeend', svgSync);
+    magic.appendChild(parseSvg(svgSync));
     this._domCtrlMagic = magic;
     ctrl.appendChild(magic);
     const github = document.createElement('a');
     github.className = itemClass;
     github.href = 'https://github.com/ayoyoqiu/obsidian-sakana-qiuqiu';
     github.target = '_blank';
-    github.insertAdjacentHTML('beforeend', svgGitHub);
+    github.appendChild(parseSvg(svgGitHub));
     ctrl.appendChild(github);
     const close = document.createElement('div');
     close.className = itemClass;
-    close.insertAdjacentHTML('beforeend', svgClose);
+    close.appendChild(parseSvg(svgClose));
     this._domCtrlClose = close;
     ctrl.appendChild(close);
   };
@@ -603,12 +614,12 @@ class SakanaWidget {
     this._domImage.addEventListener('touchstart', this._onTouchStart);
     this._domCtrlPerson.addEventListener('click', ()=>{
 		this.nextCharacter();
-		app.plugins.plugins['qiuqiu'].saveCurrentWidgetName();
+		app.plugins.plugins['qiuqiu'].saveCurrentWidgetName?.();
 	});
     this._domCtrlMagic.addEventListener('click', this.triggetAutoMode);
     this._domCtrlClose.addEventListener('click', ()=>{
 		this.unmount();
-		app.plugins.plugins['qiuqiu'].detachSakanaWidget();
+		app.plugins.plugins['qiuqiu'].detachSakanaWidget?.();
 	});
 
     // if auto fit mode

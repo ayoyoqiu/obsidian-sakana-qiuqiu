@@ -1,10 +1,10 @@
 {
 	"id": "qiuqiu",
 	"name": "Qiuqiu",
-	"version": "2.1.3",
+	"version": "2.1.4",
 	"minAppVersion": "0.15.0",
 	"description": "A cute Qiuqiu widget for your workspace! Based on Sakana Widget.",
 	"author": "ayoyoqiu",
-	"authorUrl": "https://github.com/ayoyoqiu/obsidian-sakana-qiuqiu",
+	"authorUrl": "https://github.com/ayoyoqiu",
 	"isDesktopOnly": false
 }

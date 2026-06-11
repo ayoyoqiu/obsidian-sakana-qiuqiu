@@ -47,20 +47,19 @@ export function mergeDeep<T extends object, U extends object>(target: T, source:
  * throttle a func with requestAnimationFrame,
  * https://github.com/wuct/raf-throttle/blob/master/rafThrottle.js
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- throttle utility must accept any function signature
-export function throttle<T extends (...args: any[]) => void>(callback: T): T {
+export function throttle<T extends (...args: unknown[]) => void>(callback: T): T {
   let requestId: number | null = null;
   let lastArgs: unknown[];
   const later = (context: unknown) => () => {
     requestId = null;
     callback.apply(context, lastArgs);
   };
-  const throttled = function (...args: unknown[]) {
+  const throttled = function (this: unknown, ...args: unknown[]) {
     lastArgs = args;
     if (requestId === null) {
       requestId = window.requestAnimationFrame(later(this));
     }
-  } as T;
+  } as unknown as T;
   return throttled;
 }
 
