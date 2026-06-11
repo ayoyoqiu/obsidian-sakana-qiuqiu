@@ -118,3 +118,14 @@ If your plugin does not need CSS, delete this file.
 .widget-setting .widget-main-settings * {
 	margin-top: 10px;
 }
+
+/* Donate Section */
+.qiuqiu-donate {
+	display: flex;
+	gap: 24px;
+	margin-top: 16px;
+}
+.qiuqiu-donate-label {
+	text-align: center;
+	margin-bottom: 8px;
+}

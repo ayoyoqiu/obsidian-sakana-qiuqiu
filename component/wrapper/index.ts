@@ -7,7 +7,9 @@ import characters from './characters';
 import { svgClose, svgGitHub, svgPerson, svgSync } from './icons';
 import { cloneDeep, mergeDeep, throttle, getCanvasCtx } from './utils';
 
-declare const app: any;
+import type { App } from 'obsidian';
+
+declare const app: App;
 
 declare module "obsidian" {
 	interface App {
@@ -32,7 +34,7 @@ interface SakanaWidgetOptions {
   /**
    * default character, default to `chisato`
    */
-  character?: 'qiuqiu' | 'taotao' | 'qiuqiu2' | 'qiuqiu3' | string;
+  character?: string;
   /**
    * controls bar, default to `true`
    */
@@ -251,23 +253,23 @@ class SakanaWidget {
     const itemClass = 'sakana-widget-ctrl-item';
     const person = document.createElement('div');
     person.className = itemClass;
-    person.innerHTML = svgPerson;
+    person.insertAdjacentHTML('beforeend', svgPerson);
     this._domCtrlPerson = person;
     ctrl.appendChild(person);
     const magic = document.createElement('div');
     magic.className = itemClass;
-    magic.innerHTML = svgSync;
+    magic.insertAdjacentHTML('beforeend', svgSync);
     this._domCtrlMagic = magic;
     ctrl.appendChild(magic);
     const github = document.createElement('a');
     github.className = itemClass;
     github.href = 'https://github.com/ayoyoqiu/obsidian-sakana-qiuqiu';
     github.target = '_blank';
-    github.innerHTML = svgGitHub;
+    github.insertAdjacentHTML('beforeend', svgGitHub);
     ctrl.appendChild(github);
     const close = document.createElement('div');
     close.className = itemClass;
-    close.innerHTML = svgClose;
+    close.insertAdjacentHTML('beforeend', svgClose);
     this._domCtrlClose = close;
     ctrl.appendChild(close);
   };
@@ -374,7 +376,7 @@ class SakanaWidget {
     }
 
     this._draw();
-    requestAnimationFrame(this._run);
+    window.requestAnimationFrame(this._run);
   };
 
   /**
@@ -421,7 +423,7 @@ class SakanaWidget {
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
       this._running = true;
-      requestAnimationFrame(this._run);
+      window.requestAnimationFrame(this._run);
     };
 
     document.addEventListener('mousemove', onMouseMove);
@@ -459,7 +461,7 @@ class SakanaWidget {
       document.removeEventListener('touchmove', onTouchMove);
       document.removeEventListener('touchend', onTouchEnd);
       this._running = true;
-      requestAnimationFrame(this._run);
+      window.requestAnimationFrame(this._run);
     };
 
     document.addEventListener('touchmove', onTouchMove);
@@ -485,7 +487,7 @@ class SakanaWidget {
 
     if (!this._running) {
       this._running = true;
-      requestAnimationFrame(this._run);
+      window.requestAnimationFrame(this._run);
     }
     // set a variable delay between applying magic powers
     this._magicForceTimeout = window.setTimeout(
@@ -510,7 +512,7 @@ class SakanaWidget {
     }
 
     // clear the timer or start a timer
-    clearTimeout(this._magicForceTimeout);
+    window.clearTimeout(this._magicForceTimeout);
     if (this._magicForceEnabled) {
       this._magicForceTimeout = window.setTimeout(
         this._magicForce,
@@ -627,7 +629,7 @@ class SakanaWidget {
     const _newEl = _el.cloneNode(false) as HTMLElement;
     _newEl.appendChild(this._domWrapper);
     parent.replaceChild(_newEl, _el);
-    requestAnimationFrame(this._run);
+    window.requestAnimationFrame(this._run);
     return this;
   };
 

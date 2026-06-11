@@ -1,8 +1,6 @@
 import SakanaWidget from 'component/wrapper';
 import { App, Plugin, PluginSettingTab, Setting } from 'obsidian';
 
-declare const app: any;
-
 interface SakanaWidgetPluginSettings {
 	widgets: SakanaWidgetInterface[];
 	lastWidget: string;
@@ -32,7 +30,6 @@ export default class SakanaWidgetPlugin extends Plugin {
 		this.addCommand({
 			id: 'show-sakana-widget',
 			name: 'Show Sakana Widget',
-			hotkeys: [],
 			callback: () => {
 				if(!this.sakanaBoxEl) {
 					this.addSakanaWidget();
@@ -43,10 +40,9 @@ export default class SakanaWidgetPlugin extends Plugin {
 		this.addCommand({
 			id: 'hide-sakana-widget',
 			name: 'Hide Sakana Widget',
-			hotkeys: [],
 			callback: () => {
 				if(this.sakanaBoxEl) {
-					this.detachSakanaWidget();
+					void this.detachSakanaWidget();
 				}
 			},
 		});
@@ -75,7 +71,7 @@ export default class SakanaWidgetPlugin extends Plugin {
 		await this.loadSettings();
 		this.addSettingTab(new SakanaWidgetSettingTab(this.app, this));
 		this.registerInterval(window.setTimeout(() => {
-				this.saveSettings();
+				void this.saveSettings();
 			}, 100)
 		);
 	}
@@ -108,7 +104,7 @@ export default class SakanaWidgetPlugin extends Plugin {
 			return imageUrl;
 		}
 
-		const file = app.metadataCache.getFirstLinkpathDest(imageUrl, "");
+		const file = this.app.metadataCache.getFirstLinkpathDest(imageUrl, "");
 
 		if (file) {
 			if (
@@ -116,7 +112,7 @@ export default class SakanaWidgetPlugin extends Plugin {
 					file.extension
 				)
 			) {
-				return app.vault.getResourcePath(file);
+				return this.app.vault.getResourcePath(file);
 			}
 		}
 
@@ -153,10 +149,10 @@ class SakanaWidgetSettingTab extends PluginSettingTab {
 	}
 
 	applySettingsUpdate() {
-		clearTimeout(this.applyDebounceTimer);
+		window.clearTimeout(this.applyDebounceTimer);
 		const plugin = this.plugin;
 		this.applyDebounceTimer = window.setTimeout(() => {
-			plugin.saveSettings();
+			void plugin.saveSettings();
 		}, 100);
 	}
 
@@ -167,7 +163,7 @@ class SakanaWidgetSettingTab extends PluginSettingTab {
 
 		containerEl.empty();
 
-		containerEl.createEl('h2', { text: 'Qiuqiu Widget Settings' });
+		new Setting(containerEl).setName('Qiuqiu Widget Settings').setHeading();
 
 		new Setting(containerEl)
 			.setName('Add new widget')
@@ -185,19 +181,19 @@ class SakanaWidgetSettingTab extends PluginSettingTab {
 
 		this.displayMacroSettings();
 
-		containerEl.createEl('h2', { text: '❤️ 支持作者' });
+		new Setting(containerEl).setName('❤️ 支持作者').setHeading();
 
 		containerEl.createEl('p', { text: '如果喜欢这个插件，欢迎扫码支持或添加好友~' });
 
 		const donateDiv = containerEl.createEl('div', { cls: 'qiuqiu-donate' });
-		donateDiv.style.cssText = 'display: flex; gap: 24px; margin-top: 16px;';
+		donateDiv.className = 'qiuqiu-donate';
 
 		const alipayDiv = donateDiv.createEl('div');
-		alipayDiv.createEl('p', { text: '支付宝', cls: 'qiuqiu-donate-label' }).style.cssText = 'text-align: center; margin-bottom: 8px;';
+		alipayDiv.createEl('p', { text: '支付宝', cls: 'qiuqiu-donate-label' });
 		alipayDiv.createEl('img', { attr: { src: 'https://www.img520.com/mGF8wU.jpg', width: '160' } });
 
 		const wechatDiv = donateDiv.createEl('div');
-		wechatDiv.createEl('p', { text: '微信（添加好友）', cls: 'qiuqiu-donate-label' }).style.cssText = 'text-align: center; margin-bottom: 8px;';
+		wechatDiv.createEl('p', { text: '微信（添加好友）', cls: 'qiuqiu-donate-label' });
 		wechatDiv.createEl('img', { attr: { src: 'https://www.img520.com/Zm8Caf.jpg', width: '160' } });
 
 		containerEl.createEl('p', { text: '作者主页: https://my.feishu.cn/wiki/Uc6uwglxEifKErkPcP8c3HQGnCc' });

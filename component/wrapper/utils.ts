@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 export type RequiredDeep<T> = {
   [K in keyof T]: RequiredDeep<T[K]>;
 } & Required<T>;
@@ -7,7 +5,7 @@ export type RequiredDeep<T> = {
 /**
  * simple is object
  */
-export function isObject(value: any) {
+export function isObject(value: unknown) {
   const type = typeof value;
   return value != null && (type === 'object' || type === 'function');
 }
@@ -26,40 +24,41 @@ export function cloneDeep<T>(value: T): T {
 /**
  * simple deep merge
  */
-export function mergeDeep<T, U>(target: T, source: U): T & U {
-  const _target = cloneDeep(target) as any;
-  const _source = cloneDeep(source) as any;
+export function mergeDeep<T extends object, U extends object>(target: T, source: U): T & U {
+  const _target = cloneDeep(target) as Record<string, unknown>;
+  const _source = cloneDeep(source) as Record<string, unknown>;
   if (!isObject(_target) || !isObject(_source)) {
-    return _target;
+    return _target as T & U;
   }
   Object.keys(_source).forEach((key) => {
     if (isObject(_source[key])) {
       if (!isObject(_target[key])) {
         _target[key] = {};
       }
-      _target[key] = mergeDeep(_target[key], _source[key]);
+      _target[key] = mergeDeep(_target[key] as Record<string, unknown>, _source[key] as Record<string, unknown>);
     } else {
       _target[key] = _source[key];
     }
   });
-  return _target;
+  return _target as T & U;
 }
 
 /**
  * throttle a func with requestAnimationFrame,
  * https://github.com/wuct/raf-throttle/blob/master/rafThrottle.js
  */
-export function throttle<T extends (...args: any[]) => any>(callback: T): T {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- throttle utility must accept any function signature
+export function throttle<T extends (...args: any[]) => void>(callback: T): T {
   let requestId: number | null = null;
-  let lastArgs: any[];
-  const later = (context: any) => () => {
+  let lastArgs: unknown[];
+  const later = (context: unknown) => () => {
     requestId = null;
     callback.apply(context, lastArgs);
   };
-  const throttled = function (...args: any[]) {
+  const throttled = function (...args: unknown[]) {
     lastArgs = args;
     if (requestId === null) {
-      requestId = requestAnimationFrame(later(this));
+      requestId = window.requestAnimationFrame(later(this));
     }
   } as T;
   return throttled;
