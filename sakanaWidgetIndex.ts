@@ -184,6 +184,23 @@ class SakanaWidgetSettingTab extends PluginSettingTab {
 				}));
 
 		this.displayMacroSettings();
+
+		containerEl.createEl('h2', { text: '❤️ 支持作者' });
+
+		containerEl.createEl('p', { text: '如果喜欢这个插件，欢迎扫码支持或添加好友~' });
+
+		const donateDiv = containerEl.createEl('div', { cls: 'qiuqiu-donate' });
+		donateDiv.style.cssText = 'display: flex; gap: 24px; margin-top: 16px;';
+
+		const alipayDiv = donateDiv.createEl('div');
+		alipayDiv.createEl('p', { text: '支付宝', cls: 'qiuqiu-donate-label' }).style.cssText = 'text-align: center; margin-bottom: 8px;';
+		alipayDiv.createEl('img', { attr: { src: 'https://www.img520.com/mGF8wU.jpg', width: '160' } });
+
+		const wechatDiv = donateDiv.createEl('div');
+		wechatDiv.createEl('p', { text: '微信（添加好友）', cls: 'qiuqiu-donate-label' }).style.cssText = 'text-align: center; margin-bottom: 8px;';
+		wechatDiv.createEl('img', { attr: { src: 'https://www.img520.com/Zm8Caf.jpg', width: '160' } });
+
+		containerEl.createEl('p', { text: '作者主页: https://my.feishu.cn/wiki/Uc6uwglxEifKErkPcP8c3HQGnCc' });
 	}
 
 	displayMacroSettings(): void {
