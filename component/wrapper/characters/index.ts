@@ -1,3 +1,8 @@
+import _qiuqiu from './qiuqiu.png';
+import _taotao from './taotao.png';
+import _qiuqiu2 from './qiuqiu2.png';
+import _qiuqiu3 from './qiuqiu3.png';
+
 export interface SakanaWidgetState {
   i: number;
   s: number;
@@ -14,7 +19,7 @@ export interface SakanaWidgetCharacter {
 }
 
 const qiuqiu: SakanaWidgetCharacter = {
-  image: 'https://www.img520.com/s941MX.png',
+  image: _qiuqiu,
   initialState: {
     i: 0.08,
     s: 0.1,
@@ -27,7 +32,7 @@ const qiuqiu: SakanaWidgetCharacter = {
 };
 
 const taotao: SakanaWidgetCharacter = {
-  image: 'https://www.img520.com/5Ept37.png',
+  image: _taotao,
   initialState: {
     i: 0.07,
     s: 0.12,
@@ -40,7 +45,7 @@ const taotao: SakanaWidgetCharacter = {
 };
 
 const qiuqiu2: SakanaWidgetCharacter = {
-  image: 'https://www.img520.com/vjr47i.png',
+  image: _qiuqiu2,
   initialState: {
     i: 0.09,
     s: 0.08,
@@ -53,7 +58,7 @@ const qiuqiu2: SakanaWidgetCharacter = {
 };
 
 const qiuqiu3: SakanaWidgetCharacter = {
-  image: 'https://www.img520.com/z8EN7C.png',
+  image: _qiuqiu3,
   initialState: {
     i: 0.08,
     s: 0.1,
